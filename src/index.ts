@@ -1,14 +1,14 @@
-import { GreetingGenerator } from "./module/greetingGenerator";
+import { DayTimeGreetingGenerator } from "./module/dayTimeGreetingGenerator";
 
-let greetingGenerator = new GreetingGenerator();
+let dayTimeGreetingGenerator = new DayTimeGreetingGenerator();
 
-function createGreeting(person : string) {
-    return greetingGenerator.GetHourBasedGreeting() + ", " + person;
+function createPersonalGreeting(person : string) {
+    return dayTimeGreetingGenerator.GetGreeting() + ", " + person + ".";
 }
 
 let user = "Bojan";
 // let user = [1, 2, 3];
 
-let greeting = createGreeting(user);
+let greeting = createPersonalGreeting(user);
 
 console.log(greeting);
