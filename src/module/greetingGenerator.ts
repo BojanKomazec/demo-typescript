@@ -1,3 +1,3 @@
-export interface GreetingGenerator {
-    GetGreeting() : string;
+export interface IGreetingGenerator {
+    GetGreeting(): string;
 }
