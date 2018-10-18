@@ -36,4 +36,16 @@ export function functionsDemo() {
     const GetPi = () => 3.14;
     console.log(GetPi());
 
+    function PreserveArgumentProperties(arg1: {
+        readonly prop1: number,
+    }) {
+        // error TS2540: Cannot assign to 'prop1' because it is a constant or a read-only property.
+        // arg1.prop1 = 0;
+    }
+    const objectThatShouldNotBeChanged = {
+        prop1: 123,
+    };
+    // it is guaranteed that this method will not change object properties' values
+    PreserveArgumentProperties(objectThatShouldNotBeChanged);
+
 }

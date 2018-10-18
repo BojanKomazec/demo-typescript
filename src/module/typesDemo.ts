@@ -47,6 +47,7 @@ export function typesDemo() {
     // Enum
     //
     // It is allowed to be declared inside the function.
+    // Numeric Enum
     enum Color {
         Blue,
         Green,
@@ -57,6 +58,7 @@ export function typesDemo() {
     const color1: Color = Color.Green;
     console.log(`color1 = ` + color1);
 
+    // apart from Numeric Enums, TypeScript also provides String Enums:
     enum WesternEuropeCountry {
         Austria = 'at',
         France = 'fr',
