@@ -21,6 +21,26 @@ export function typesDemo() {
     const binary: number = 0b1010; // note 0b
     const octal: number = 0o744; // note 0o
 
+    // default value of all types is: undefined
+    let someNumber: number;
+    // error TS2454: Variable 'someNumber' is used before being assigned.
+    console.log(`Default value of type 'number' is: ${someNumber}`);
+    // output: Default value of type 'number' is: undefined
+
+    // error TS2454: Variable 'someNumber' is used before being assigned.
+    if (someNumber === undefined) {
+        console.log(`someNumber is undefined`);
+        // output: someNumber is undefined
+    }
+
+    //  error TS2322: Type 'null' is not assignable to type 'number'.
+    // but nevertheless, null can be assigned to number (or to any type)
+    someNumber = null;
+    if (someNumber === null) {
+        console.log(`someNumber is null`);
+        // output: someNumber is null
+    }
+
     //
     // string
     //
@@ -58,12 +78,28 @@ export function typesDemo() {
     const color1: Color = Color.Green;
     console.log(`color1 = ` + color1);
 
+    // it is possible to use index operator on enums
+    const someEnumValue = Color[Color.Green];
+    console.log(`Color[Color.Green] = ${someEnumValue}`);
+    // output: Color[Color.Green] = Green
+
+    console.log(`Color['Green'] = ${Color['Green']}`);
+    // output: Color['Green'] = 1
+
+    const enumString = 'Green';
+    const enumVal = Color[enumString];
+    console.log(`Color[enumString] = ${enumVal}`);
+    // output: Color[enumString] = 1
+
     // apart from Numeric Enums, TypeScript also provides String Enums:
     enum WesternEuropeCountry {
         Austria = 'at',
         France = 'fr',
         Germany = 'de',
     }
+
+    console.log(`WesternEuropeCountry['France'] = ${WesternEuropeCountry['France']}`);
+    // output: WesternEuropeCountry['France'] = fr
 
     type WesternEurope = WesternEuropeCountry;
 
@@ -100,4 +136,31 @@ export function typesDemo() {
 
     const y: any = {};
     console.log(y);
+
+    //
+    // void
+    //
+    function funcThatReturnsNoValue(): void {
+        console.log(`funcThatReturnsNoValue()`);
+    }
+
+    funcThatReturnsNoValue();
+
+    // If async task does not return any value ("fire and forget type of async
+    // tasks"), its promise shall be of type Promise<void>.
+    async function funcThatReturnsNoValueAsync(): Promise<void> {
+        return new Promise<void>((resolve: any) => {
+            setTimeout(() => {
+                console.log('funcThatReturnsNoValueAsync(): Timeout reached!');
+                resolve();
+            },
+            2000);
+        });
+    }
+    funcThatReturnsNoValueAsync();
+    // allow some time for async task from funcThatReturnsNoValueAsync() to complete
+    setTimeout(() => {
+        console.log('Waiting for funcThatReturnsNoValueAsync() stopped.');
+    },
+    3000);
 }
