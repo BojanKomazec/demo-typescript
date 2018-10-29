@@ -7,6 +7,7 @@ class Person {
         a: 1,
         b: 'b',
     };
+    private readonly privateReadonlyMember: number;
 
     // It is not possible to have enum inside a class
     // error TS1068: Unexpected token. A constructor, method, accessor, or property was expected.
@@ -17,8 +18,14 @@ class Person {
 
     private name: string;
 
-    constructor(name: string) {
+    constructor(name: string, intValue: number) {
         this.name = name;
+        // readonly member can be initialized in constructor
+        this.privateReadonlyMember = intValue;
+    }
+
+    public getPrivateReadonlyMember(): number {
+        return this.privateReadonlyMember;
     }
 
     public getName(): string {
@@ -42,6 +49,7 @@ class Person {
 }
 
 export function classDemo() {
-    const p1 = new Person('Bojan');
+    const p1 = new Person('Bojan', 123);
     console.log(`p1's name is ${p1.getName()}.`);
+    console.log(`p1's privateReadonlyMember is ${p1.getPrivateReadonlyMember()}.`);
 }

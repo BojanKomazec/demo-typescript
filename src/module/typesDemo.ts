@@ -105,6 +105,16 @@ export function typesDemo() {
 
     //[key in WesternEurope].forEach(el => console.log(`Western Europe country: ${el}`));
 
+    enum EasterEuropeCountry {
+        Belarus,
+        CzechRepublic,
+        Poland,
+    }
+
+    type EuropeCountry = EasterEuropeCountry | WesternEuropeCountry;
+    // let europeCountry : EuropeCountry = EuropeCountry.Austria;
+
+
     //
     // any
     //
@@ -163,4 +173,17 @@ export function typesDemo() {
         console.log('Waiting for funcThatReturnsNoValueAsync() stopped.');
     },
     3000);
+
+    // defining a variable of the function type
+    const fun1: (data: any) => void = (data) => { console.log(data); };
+    fun1('This is an argument passed to fun1');
+
+    // defining a function argument which is of the function type
+    // This is very cool as fun2 is binding data and some other function.
+    function fun2(message: string, fun: (data: any) => void): void {
+        console.log('fun2 is calling function fun passed in as an argument...');
+        fun(message);
+    }
+    fun2('This is a string passed to fun2', fun1);
+
 }

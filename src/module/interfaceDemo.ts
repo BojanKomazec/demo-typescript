@@ -1,3 +1,5 @@
+import fs = require("fs");
+
 enum SomeEnum {
     Value1 = 'value1',
     Value2 = 'value2',
@@ -14,6 +16,29 @@ interface ISomeInterface {
 interface ISomeInterfaceWithFixedPropertyValue {
     prop1: SomeEnum.Value1;
     prop2: number;
+}
+
+/**
+ * User-defined type guard.
+ * https://basarat.gitbooks.io/typescript/docs/types/typeGuard.html
+ */
+function isISomeInterfaceWithFixedPropertyValue(obj: any): obj is ISomeInterfaceWithFixedPropertyValue {
+    return obj.prop1 !== undefined
+        && obj.prop1 === SomeEnum.Value1
+        && obj.prop2 !== undefined
+        && typeof obj.prop2 === 'number';
+}
+
+interface ISomeInterface2 {
+    prop1: string;
+    prop2: number;
+    prop3: ISomeInterfaceWithFixedPropertyValue;
+}
+
+function isISomeInterface2(obj: any): obj is ISomeInterface2 {
+    return obj.prop1 !== undefined
+        && obj.prop2 !== undefined
+        && isISomeInterfaceWithFixedPropertyValue(obj);
 }
 
 export function interfaceDemo() {
@@ -63,4 +88,75 @@ export function interfaceDemo() {
         prop1: SomeEnum.Value1,
         prop2: 2,
     };
+
+    demoUserDefinedTypeGuard();
+}
+
+/**
+ * https://basarat.gitbooks.io/typescript/docs/types/typeGuard.html
+ */
+function demoUserDefinedTypeGuard() {
+    console.log('demoUserDefinedTypeGuard()');
+
+    const o1 = {
+        prop1: 'value1',
+        prop2: 1,
+    };
+
+    if (isISomeInterfaceWithFixedPropertyValue(o1)) {
+        console.log('o1 is ISomeInterfaceWithFixedPropertyValue'); // this is printed
+    } else {
+        console.log('o1 is NOT ISomeInterfaceWithFixedPropertyValue');
+    }
+
+    const o2 = {
+        prop1: 'value2',
+        prop2: 1,
+    };
+
+    if (isISomeInterfaceWithFixedPropertyValue(o2)) {
+        console.log('o2 is ISomeInterfaceWithFixedPropertyValue');
+    } else {
+        console.log('o2 is NOT ISomeInterfaceWithFixedPropertyValue'); // this is printed
+    }
+
+    const o3 = {
+        prop1: 'value1',
+        prop3: 1,
+    };
+
+    if (isISomeInterfaceWithFixedPropertyValue(o3)) {
+        console.log('o3 is ISomeInterfaceWithFixedPropertyValue');
+    } else {
+        console.log('o3 is NOT ISomeInterfaceWithFixedPropertyValue'); // this is printed
+    }
+
+    // let's emulate receiving potentially corrupted JSON from some external source
+    const content = fs.readFileSync('data.json');
+    console.log(`File content: ${content}\n`);
+    const [o4, o5, o6, o7] = JSON.parse(content.toString());
+
+    if (isISomeInterfaceWithFixedPropertyValue(o4)) {
+        console.log('o4 is ISomeInterfaceWithFixedPropertyValue'); // this is printed
+    } else {
+        console.log('o4 is NOT ISomeInterfaceWithFixedPropertyValue');
+    }
+
+    if (isISomeInterfaceWithFixedPropertyValue(o5)) {
+        console.log('o5 is ISomeInterfaceWithFixedPropertyValue');
+    } else {
+        console.log('o5 is NOT ISomeInterfaceWithFixedPropertyValue'); // this is printed
+    }
+
+    if (isISomeInterfaceWithFixedPropertyValue(o6)) {
+        console.log('o6 is ISomeInterfaceWithFixedPropertyValue');
+    } else {
+        console.log('o6 is NOT ISomeInterfaceWithFixedPropertyValue'); // this is printed
+    }
+
+    if (isISomeInterfaceWithFixedPropertyValue(o7)) {
+        console.log('o7 is ISomeInterfaceWithFixedPropertyValue');
+    } else {
+        console.log('o7 is NOT ISomeInterfaceWithFixedPropertyValue'); // this is printed
+    }
 }
