@@ -6,9 +6,9 @@ import { keyofDemo } from './module/keyofDemo';
 import { typesDemo } from './module/typesDemo';
 
 // keyofDemo();
-typesDemo();
+// typesDemo();
 // functionsDemo();
-// classDemo();
+classDemo();
 // interfaceDemo();
 
 // https://stackoverflow.com/questions/5006821/nodejs-how-to-read-keystrokes-from-stdin

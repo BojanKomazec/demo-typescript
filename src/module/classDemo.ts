@@ -1,55 +1,27 @@
-class Person {
-    // error TS1248: A class member cannot have the 'const' keyword.
-    // public static const someConstant: number = 1234;
-
-    public static readonly someReadonlyMember: number = 1234;
-    public static readonly someReadonlyMemberObject: any = {
-        a: 1,
-        b: 'b',
-    };
-    private readonly privateReadonlyMember: number;
-
-    // It is not possible to have enum inside a class
-    // error TS1068: Unexpected token. A constructor, method, accessor, or property was expected.
-    // enum SomeEnum {
-    //     E1,
-    //     E2,
-    // }
-
-    private name: string;
-
-    constructor(name: string, intValue: number) {
-        this.name = name;
-        // readonly member can be initialized in constructor
-        this.privateReadonlyMember = intValue;
-    }
-
-    public getPrivateReadonlyMember(): number {
-        return this.privateReadonlyMember;
-    }
-
-    public getName(): string {
-        return this.name;
-    }
-
-    private tester() {
-        // static member has to be referenced via class name otherwise this error
-        // is reported:
-        // error TS2662: Cannot find name 'someReadonlyMember'. Did you mean the
-        // static member 'Person.someReadonlyMember'?
-        // someReadonlyMember = 4567;
-
-        // error TS2540: Cannot assign to 'someReadonlyMember' because it is a
-        // constant or a read-only property.
-        // Person.someReadonlyMember = 4567;
-
-        // readonly does not provide deep const-ness
-        Person.someReadonlyMemberObject.a = 2;
-    }
-}
+import { Employee } from './Employee';
+import { Person } from './Person';
 
 export function classDemo() {
-    const p1 = new Person('Bojan', 123);
+    const p1: Person = new Person('Bojan', 123);
     console.log(`p1's name is ${p1.getName()}.`);
     console.log(`p1's privateReadonlyMember is ${p1.getPrivateReadonlyMember()}.`);
+
+    // error TS2554: Expected 2 arguments, but got 0.
+    // An argument for 'name' was not provided.
+    // const employee1: Employee = new Employee();
+
+    // error TS2554: Expected 2 arguments, but got 1.
+    // An argument for 'intValue' was not provided.
+    // const employee1: Employee = new Employee('Ted Baker');
+
+    const employee1: Employee = new Employee('Ted Baker', 123, 'Greggs');
+    employee1.getName();
+    employee1.manufacture('bread');
+
+    // Type 'Person' is not assignable to type 'Employee'.
+    // const employee2 : Employee = new Person('Leo Baker', 124);
+
+    const person2: Person = new Employee('Bob Carpenter', 124, 'Focus');
+    // Property 'manufacture' does not exist on type 'Person'
+    // person2.manufacture('wooden table');
 }

@@ -90,6 +90,7 @@ export function interfaceDemo() {
     };
 
     demoUserDefinedTypeGuard();
+    demoKeywordAs();
 }
 
 /**
@@ -159,4 +160,64 @@ function demoUserDefinedTypeGuard() {
     } else {
         console.log('o7 is NOT ISomeInterfaceWithFixedPropertyValue'); // this is printed
     }
+}
+
+// 'as' keyword
+// https://basarat.gitbooks.io/typescript/docs/types/type-assertion.html
+// https://decembersoft.com/posts/typescript-vs-csharp-as-keyword/
+function demoAssigningEmptyObject() {
+    interface IFoo {
+         value: number;
+    }
+
+    // error: Type '{}' is not assignable to type 'IFoo'. Property 'value' is missing in type '{}'.
+    // let foo: IFoo = {};
+    // type {} is "an object with zero properties"
+
+    let foo: IFoo = {} as IFoo; // ok
+
+    foo = {
+        value: 123,
+    };
+}
+
+// type assertion (using 'as' to tell compiler the type of variable) happens in compile time
+function demoKeywordAs() {
+    interface IPerson {
+        name: string;
+        age: number;
+    }
+
+    const a = {
+        name: 'Bojan',
+    };
+
+    let b: IPerson;
+
+    // Type '{ name: string; }' is not assignable to type 'IPerson'.
+    // Property 'age' is missing in type '{ name: string; }'.
+    // b = a;
+
+    // ok
+    b = a as IPerson;
+
+    console.log(`b.age = ${b.age}`); // "undefined"
+}
+
+function immutabilityDemo() {
+
+    // this interface provides immutability
+    interface IProduct {
+        readonly id: number;
+        readonly dateOfManufacture: Date;
+    }
+
+    // this is immutable object
+    const product: IProduct = {
+        dateOfManufacture: new Date(),
+        id: 123,
+    };
+
+    // error: [ts] Cannot assign to 'id' because it is a constant or a read-only property.
+    // product.id = 456;
 }
