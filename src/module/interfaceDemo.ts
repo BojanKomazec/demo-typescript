@@ -1,4 +1,4 @@
-import fs = require("fs");
+import fs = require('fs');
 
 enum SomeEnum {
     Value1 = 'value1',

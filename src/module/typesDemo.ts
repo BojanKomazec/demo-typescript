@@ -2,6 +2,12 @@
 
 export function typesDemo() {
     console.log('typesDemo()');
+    typesDemo1();
+    truthyFalsyStringDemo();
+}
+
+function typesDemo1() {
+    console.log('typesDemo1()');
 
     //
     // boolean
@@ -23,18 +29,19 @@ export function typesDemo() {
 
     // default value of all types is: undefined
     let someNumber: number;
-    // error TS2454: Variable 'someNumber' is used before being assigned.
+
+    // @ts-ignore: error TS2454: Variable 'someNumber' is used before being assigned.
     console.log(`Default value of type 'number' is: ${someNumber}`);
     // output: Default value of type 'number' is: undefined
 
-    // error TS2454: Variable 'someNumber' is used before being assigned.
+    // @ts-ignore: error TS2454: Variable 'someNumber' is used before being assigned.
     if (someNumber === undefined) {
         console.log(`someNumber is undefined`);
         // output: someNumber is undefined
     }
 
-    //  error TS2322: Type 'null' is not assignable to type 'number'.
     // but nevertheless, null can be assigned to number (or to any type)
+    // @ts-ignore: error TS2322: Type 'null' is not assignable to type 'number'.
     someNumber = null;
     if (someNumber === null) {
         console.log(`someNumber is null`);
@@ -58,6 +65,8 @@ export function typesDemo() {
     //
     const lottoCombination: number[] = [3, 23, 14, 35, 30, 1, 7];
 
+    // Array type using 'Array<T>' is forbidden for simple types. Use 'T[]' instead.
+    // tslint:disable-next-line
     const lottoCombination2: Array<number> = [3, 23, 14, 35, 30, 1, 7];
     // error@ [tslint] Array type using 'Array<T>' is forbidden for simple types. Use 'T[]' instead.
 
@@ -92,6 +101,8 @@ export function typesDemo() {
     console.log(`Color[Color.Green] = ${someEnumValue}`);
     // output: Color[Color.Green] = Green
 
+    // object access via string literals is disallowed
+    // tslint:disable-next-line
     console.log(`Color['Green'] = ${Color['Green']}`);
     // error: [tslint] object access via string literals is disallowed
     // output: Color['Green'] = 1
@@ -111,6 +122,8 @@ export function typesDemo() {
         Germany = 'de',
     }
 
+    // object access via string literals is disallowed
+    // tslint:disable-next-line
     console.log(`WesternEuropeCountry['France'] = ${WesternEuropeCountry['France']}`);
     // output: WesternEuropeCountry['France'] = fr
     console.log(`WesternEuropeCountry.France = ${WesternEuropeCountry.France}`);
@@ -245,7 +258,7 @@ export function typesDemo() {
     fun2('This is a string passed to fun2', fun1);
 
     //
-    // indexable type
+    // indexable typetruthyFalsyStringDemo
     //
     // https://www.typescriptlang.org/docs/handbook/interfaces.html
     const pathMap: {[key: string]: string[]} = {
@@ -285,4 +298,38 @@ export function typesDemo() {
         c: true,
     };
 
+}
+
+function truthyFalsyStringDemo() {
+    console.log('\ntruthyFalsyStringDemo()');
+
+    const str1 = null;
+    if (str1) {
+        console.log(`str1 is truthy. str1 = ${str1}`);
+    } else {
+        console.log(`str1 is falsy. str1 = ${str1}`); // this is printed
+    }
+
+    const str2 = undefined;
+    if (str2) {
+        console.log(`str2 is truthy. str2 = ${str2}`);
+    } else {
+        console.log(`str2 is falsy. str2 = ${str2}`); // this is printed
+    }
+
+    const str3 = '';
+    if (str3) {
+        console.log(`str3 is truthy. str3 = ${str3}`);
+    } else {
+        console.log(`str3 is falsy. str3 = ${str3}`); // this is printed
+    }
+
+    const str4 = '      ';
+    if (str4) {
+        console.log(`str4 is truthy. str4 = ${str3}`); // this is printed
+    } else {
+        console.log(`str4 is falsy. str4 = ${str3}`);
+    }
+
+    console.log('\n');
 }

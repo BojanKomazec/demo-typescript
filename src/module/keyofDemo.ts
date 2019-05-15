@@ -1,5 +1,5 @@
-// error TS7017: Element implicitly has an 'any' type because type '{}' has no index signature.
 function getProperty1(obj: {}, key: string): any {
+    // @ts-ignore: error TS7017: Element implicitly has an 'any' type because type '{}' has no index signature.
     return obj[key];
 }
 

@@ -1,0 +1,29 @@
+version: '3'
+
+volumes:
+  demo_ts_database_data:
+    driver: local
+
+services:
+
+  db:
+    image: postgres:latest
+    volumes:
+      - demo_ts_database_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    env_file:
+    - .env
+    environment:
+      POSTGRES_DB: $PGDATABASE
+      POSTGRES_PASSWORD: $PGPASSWORD
+    stdin_open: true
+    tty: true
+
+  demo_ts:
+    depends_on:
+      - db
+    build: .
+    env_file:
+    - .env
+    restart: on-failure
