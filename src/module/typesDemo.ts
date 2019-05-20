@@ -1,9 +1,13 @@
+// import { stringify } from 'querystring';
+
 // https://www.typescriptlang.org/docs/handbook/basic-types.html
 
 export function typesDemo() {
     console.log('typesDemo()');
     typesDemo1();
     truthyFalsyStringDemo();
+    mapDemo();
+    indexerDemo();
 }
 
 function typesDemo1() {
@@ -332,4 +336,85 @@ function truthyFalsyStringDemo() {
     }
 
     console.log('\n');
+}
+
+/**
+ * TypeScript uses the same Map type as defined in ES6.
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
+ */
+function mapDemo() {
+    console.log('mapDemo()');
+
+    // Creating a map whose keys are numbers and values are json objects
+    const mapStrJson = new Map<number, any>();
+
+    // Insertion
+    mapStrJson.set(1990, { name: 'Lazio' });
+    mapStrJson.set(1991, { name: 'Juventus' });
+    mapStrJson.set(1992, { name: 'Milan' });
+
+    // Iterating over key-value pairs
+    // We're using JSON.stringify as othervise value is printed as "[object Object]"
+    for (const [key, value] of mapStrJson) {
+        console.log(key + ' = ' + JSON.stringify(value));
+    }
+
+    // Iterating over keys only
+    for (const key of mapStrJson.keys()) {
+        console.log(key);
+    }
+
+    // Iterating over values only
+    for (const value of mapStrJson.values()) {
+        console.log(value);
+    }
+
+    // Editing - Changing the value of some key
+    console.log('Setting key 1992 to Sampdoria...');
+    mapStrJson.set(1992, { name: 'Sampdoria' });
+    console.log('mapStrJson.get(1992) = ' + mapStrJson.get(1992));
+
+    console.log('~mapDemo()');
+}
+
+// https://basarat.gitbooks.io/typescript/docs/types/index-signatures.html
+
+interface IAddress {
+    street: string;
+    houseNumber: number;
+    city: string;
+    country: string;
+}
+
+/**
+ * This intrerface has to represent a JavaScript object which is a collection of key-value pairs
+ * where key is a string and value is an object of type IAddress.
+ */
+interface ICitizens {
+    [name: string]: IAddress;
+}
+
+function indexerDemo() {
+    console.log('indexerDemo()');
+
+    const citizens: ICitizens = {};
+    citizens.Adele = {
+        city: 'London',
+        country: 'UK',
+        houseNumber: 23,
+        street: 'Duke Avenue',
+    };
+
+    citizens.Bjork = {
+        city: 'Reyjkjavik',
+        country: 'Iceland',
+        houseNumber: 34,
+        street: 'Fjorlashavngatta',
+    };
+
+    for (const name of Object.keys(citizens)) {
+        console.log(`${name}: ${JSON.stringify(citizens[name])}`);
+    }
+
+    console.log('~indexerDemo()');
 }

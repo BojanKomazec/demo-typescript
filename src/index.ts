@@ -4,8 +4,8 @@
 // import { httpClientDemo } from './module/httpClientDemo';
 // import { interfaceDemo } from './module/interfaceDemo';
 // import { keyofDemo } from './module/keyofDemo';
-// import { typesDemo } from './module/typesDemo';
 import { testDb } from './module/pgDemo';
+import { typesDemo } from './module/typesDemo';
 import { IConfig } from './types';
 
 function loadConfig(): IConfig {
@@ -52,12 +52,26 @@ function loadConfig(): IConfig {
 // console.log('Press any key...');
 
 /**
+ * To run these demos you can run the app from command line as "npm start"
+ */
+function runnableFromCommandLine(): void {
+    typesDemo();
+}
+
+/**
+ * To run these demos you have to run the app in a container, with "docker-compose up"
+ */
+async function runnableFromDocker(): Promise<void> {
+    const config: IConfig = loadConfig();
+    await testDb(config);
+}
+/**
  * Application entry point.
  */
 (async () => {
     try {
-        const config: IConfig = loadConfig();
-        await testDb(config);
+        runnableFromCommandLine();
+        // await runnableFromDocker();
     } catch (err) {
         console.log(`Error: ${err}`);
         process.exitCode = 1;
