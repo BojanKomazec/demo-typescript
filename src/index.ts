@@ -4,9 +4,13 @@
 // import { httpClientDemo } from './module/httpClientDemo';
 // import { interfaceDemo } from './module/interfaceDemo';
 // import { keyofDemo } from './module/keyofDemo';
+import { knexDemo } from './module/knexDemo';
 import { testDb } from './module/pgDemo';
 import { typesDemo } from './module/typesDemo';
 import { IConfig } from './types';
+
+// require('dotenv').config()
+import * as dotenv from 'dotenv';
 
 function loadConfig(): IConfig {
     const defaultPgHost = 'localhost';
@@ -17,11 +21,11 @@ function loadConfig(): IConfig {
 
     return {
         db: {
-            database: process.env.PGDATABASE || defaultPgDatabase,
-            host: process.env.PGHOST || defaultPgHost,
-            password: process.env.PGPASSWORD || defaultPgPassword,
-            port: parseInt(process.env.PGPORT || defaultPgPort, 10),
-            user: process.env.PGUSER || defaultPgUser,
+            database: process.env.DB_NAME || defaultPgDatabase,
+            host: process.env.DB_HOST || defaultPgHost,
+            password: process.env.DB_PASS || defaultPgPassword,
+            port: parseInt(process.env.DB_PORT || defaultPgPort, 10),
+            user: process.env.DB_USER || defaultPgUser,
         },
     };
 }
@@ -64,14 +68,15 @@ function runnableFromCommandLine(): void {
 async function runnableFromDocker(): Promise<void> {
     const config: IConfig = loadConfig();
     await testDb(config);
+    knexDemo(config);
 }
 /**
  * Application entry point.
  */
 (async () => {
     try {
-        runnableFromCommandLine();
-        // await runnableFromDocker();
+        // runnableFromCommandLine();
+        await runnableFromDocker();
     } catch (err) {
         console.log(`Error: ${err}`);
         process.exitCode = 1;

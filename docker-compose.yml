@@ -1,22 +1,21 @@
 version: '3'
 
-volumes:
-  demo_ts_database_data:
-    driver: local
+# volumes:
+#   ./data/postgres:
+#     driver: local
 
 services:
 
   db:
-    image: postgres:latest
+    image: postgres
     volumes:
-      - demo_ts_database_data:/var/lib/postgresql/data
+      - "./data/postgres:/var/lib/postgresql/data"
     ports:
-      - 5432:5432
-    env_file:
-    - .env
+      - "5432:5432"
     environment:
-      POSTGRES_DB: $PGDATABASE
-      POSTGRES_PASSWORD: $PGPASSWORD
+        POSTGRES_DB: $DB_NAME
+        POSTGRES_USER: $DB_USER
+        POSTGRES_PASSWORD: $DB_PASS
     stdin_open: true
     tty: true
 
