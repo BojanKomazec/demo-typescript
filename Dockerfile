@@ -18,6 +18,7 @@ FROM node_cache AS build
 COPY src/ ./src/
 COPY tsconfig.json ./tsconfig.json
 COPY tslint.json ./tslint.json
+COPY knexfile.js ./knexfile.js
 RUN npm run build
 
 # run

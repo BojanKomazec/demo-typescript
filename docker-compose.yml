@@ -23,6 +23,10 @@ services:
     depends_on:
       - db
     build: .
+    volumes:
+      - "./db/migrations:/usr/local/demo_ts/db/migrations"
     env_file:
     - .env
     restart: on-failure
+    stdin_open: true
+    tty: true

@@ -1,6 +1,6 @@
 import { IConfig } from '../types';
 
-export async function knexDemo(config: IConfig) {
+export async function connectionDemo(config: IConfig) {
     const options = {
         client: 'pg',
         connection: {
@@ -31,4 +31,64 @@ export async function knexDemo(config: IConfig) {
     );
 
     // const res = await knex.select().from('users').limit(10);
+}
+
+async function createMigrationFile(config: IConfig): Promise<any> {
+    return new Promise((resolve, reject) => {
+        const { spawn } = require('child_process');
+        // knex migrate:make merchants_products
+        const knex = spawn('knex', ['migrate:make', process.env.DB_NAME]);
+
+        knex.stdout.on('data', (data: any) => {
+            console.log(`stdout: ${data}`);
+        });
+
+        knex.stderr.on('data', (data: any) => {
+            console.log(`stderr: ${data}`);
+        });
+
+        knex.on('close', (code: any) => {
+            console.log(`child process exited with code ${code}`);
+            if (code === 0) {
+                resolve(code);
+            } else {
+                reject(code);
+            }
+        });
+    });
+}
+
+async function runMigration(config: IConfig): Promise<any> {
+    return new Promise((resolve, reject) => {
+        const { spawn } = require('child_process');
+        // knex migrate:make merchants_products
+        const knex = spawn('knex', ['migrate:latest']);
+
+        knex.stdout.on('data', (data: any) => {
+            console.log(`stdout: ${data}`);
+        });
+
+        knex.stderr.on('data', (data: any) => {
+            console.log(`stderr: ${data}`);
+        });
+
+        knex.on('close', (code: any) => {
+            console.log(`child process exited with code ${code}`);
+            if (code === 0) {
+                resolve(code);
+            } else {
+                reject(code);
+            }
+        });
+    });
+}
+
+async function migrationDemo(config: IConfig): Promise<any> {
+    await createMigrationFile(config);
+    await runMigration(config);
+}
+
+export async function knexDemo(config: IConfig) {
+    // await connectionDemo(config);
+    await migrationDemo(config);
 }
