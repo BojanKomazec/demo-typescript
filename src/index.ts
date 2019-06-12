@@ -17,11 +17,11 @@ function loadConfig(): IConfig {
 
     return {
         db: {
-            database: process.env.PGDATABASE || defaultPgDatabase,
-            host: process.env.PGHOST || defaultPgHost,
-            password: process.env.PGPASSWORD || defaultPgPassword,
-            port: parseInt(process.env.PGPORT || defaultPgPort, 10),
-            user: process.env.PGUSER || defaultPgUser,
+            database: process.env.DB_NAME || defaultPgDatabase,
+            host: process.env.DB_HOST || defaultPgHost,
+            password: process.env.DB_PASSWORD || defaultPgPassword,
+            port: parseInt(process.env.DB_PORT || defaultPgPort, 10),
+            user: process.env.DB_USER || defaultPgUser,
         },
     };
 }
@@ -62,6 +62,7 @@ function runnableFromCommandLine(): void {
  * To run these demos you have to run the app in a container, with "docker-compose up"
  */
 async function runnableFromDocker(): Promise<void> {
+    runnableFromCommandLine();
     const config: IConfig = loadConfig();
     await testDb(config);
 }
@@ -70,8 +71,8 @@ async function runnableFromDocker(): Promise<void> {
  */
 (async () => {
     try {
-        runnableFromCommandLine();
-        // await runnableFromDocker();
+        // runnableFromCommandLine();
+        await runnableFromDocker();
     } catch (err) {
         console.log(`Error: ${err}`);
         process.exitCode = 1;
