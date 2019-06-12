@@ -71,14 +71,12 @@ To remove the image and volumes, use:
  ```
  $ docker-compose down --rmi all --volumes
  ```
-<<<<<<< HEAD
 ## Running the application on the local host
 
 Application requires Node and PostgreSQL to be installed.
 
 If all environment requirements are met, application can be run from command line (`npm run build && npm start`) but recommended way is to use Docker (Docker and docker-compose are required).
 
-=======
 Database specified by `POSTGRES_DB` environment variable in `docker-compose.yml` is created only on the first creation of the Postgres instance (when database data directory is empty). To allow re-creation of this database, delete the shared db data volume and delete this directory e.g.:
 ```
 $ sudo rm -rf ./data/postgres/
@@ -167,4 +165,3 @@ db_1  | 2019-05-30 15:14:51.904 UTC [1] LOG:  database system is ready to accept
 ```
 
 Note the presence of `CREATE DATABASE` command which indicates that process did create database specified in yml file.
->>>>>>> 8d15aa5c4faacfa362b246d342454177188c4c9a
