@@ -23,11 +23,7 @@ function loadConfig(): IConfig {
         db: {
             database: process.env.DB_NAME || defaultPgDatabase,
             host: process.env.DB_HOST || defaultPgHost,
-<<<<<<< HEAD
             password: process.env.DB_PASSWORD || defaultPgPassword,
-=======
-            password: process.env.DB_PASS || defaultPgPassword,
->>>>>>> 8d15aa5c4faacfa362b246d342454177188c4c9a
             port: parseInt(process.env.DB_PORT || defaultPgPort, 10),
             user: process.env.DB_USER || defaultPgUser,
         },
