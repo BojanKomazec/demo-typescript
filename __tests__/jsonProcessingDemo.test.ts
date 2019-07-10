@@ -184,4 +184,3 @@ its \'array\' value with \'string\' and removes property \'items\' so the output
         },
     );
 });
-

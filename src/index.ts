@@ -6,6 +6,7 @@
 // import { keyofDemo } from './module/keyofDemo';
 import { knexDemo } from './module/knexDemo';
 import { testDb } from './module/pgDemo';
+import { selfInvokingFuncModuleImporterDemo } from './module/selfInvokingFunctionModuleImporter';
 import { typesDemo } from './module/typesDemo';
 import { IConfig } from './types';
 
@@ -59,7 +60,8 @@ function loadConfig(): IConfig {
  * To run these demos you can run the app from command line as "npm start"
  */
 function runnableFromCommandLine(): void {
-    typesDemo();
+    // typesDemo();
+    selfInvokingFuncModuleImporterDemo();
 }
 
 /**
@@ -76,8 +78,8 @@ async function runnableFromDocker(): Promise<void> {
  */
 (async () => {
     try {
-        // runnableFromCommandLine();
-        await runnableFromDocker();
+        runnableFromCommandLine();
+        // await runnableFromDocker();
     } catch (err) {
         console.log(`Error: ${err}`);
         process.exitCode = 1;
