@@ -73,6 +73,17 @@ async function runnableFromDocker(): Promise<void> {
     await testDb(config);
     knexDemo(config);
 }
+
+async function dummyAsyncFunction(): Promise<void> {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            console.log('dummyAsyncFunction() - setTimeout(): before calling resolve()');
+            resolve();
+            console.log('dummyAsyncFunction() - setTimeout(): after calling resolve()');
+        }, 2000);
+    });
+}
+
 /**
  * Application entry point.
  */
@@ -80,6 +91,12 @@ async function runnableFromDocker(): Promise<void> {
     try {
         runnableFromCommandLine();
         // await runnableFromDocker();
+
+        // test async entry point
+        // console.log('before calling dummyAsyncFunction()');
+        // await dummyAsyncFunction();
+        // console.log('after calling dummyAsyncFunction()');
+        // ~test async entry point
     } catch (err) {
         console.log(`Error: ${err}`);
         process.exitCode = 1;

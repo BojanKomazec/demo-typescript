@@ -32,3 +32,41 @@ export function transformArrayToString(json: any, delimiter: string): any {
 
     return newJson;
 }
+
+/**
+ * This is the old implementation of renameKey(). It uses forEach.
+ * @param posts - JSON array of objects
+ * @param oldName - each object has a key named oldName
+ * @param newName - new key name
+ */
+export function renameKey1(posts: any[], oldName: string, newName: string): any[] {
+    const modified: any[] = [];
+    posts.forEach((post: any) => {
+        const modifiedPost: any = {};
+        Object.keys(post).forEach((key: string) => {
+            const value: any = post[key];
+            if (key === oldName) {
+                key = newName;
+            }
+            modifiedPost[key] = value;
+        });
+        modified.push(modifiedPost);
+    });
+    return modified;
+}
+
+/**
+ * @param posts - JSON array of objects
+ * @param oldName - each object has a key named oldName
+ * @param newName - new key name
+ */
+export const renameKey = (posts: any[], oldName: string, newName: string) =>
+    posts.map((post: any) =>
+        Object.keys(post).reduce(
+            (out, key) => ({
+                ...out,
+                [key === oldName ? newName : key]: post[key],
+            }),
+            {},
+        ),
+    );

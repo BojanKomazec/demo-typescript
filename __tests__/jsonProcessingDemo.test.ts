@@ -1,4 +1,4 @@
-import { transformArrayToString } from '../src/module/jsonProcessingDemo';
+import { renameKey, transformArrayToString } from '../src/module/jsonProcessingDemo';
 
 test('Dummy test', () => {
     expect(1).toBe(1);
@@ -180,6 +180,64 @@ describe('transformArrayToString', () => {
 its \'array\' value with \'string\' and removes property \'items\' so the output is %j',
         (input, expectedResult) => {
             const res: any = transformArrayToString(input, '+++');
+            expect(res).toEqual(expectedResult);
+        },
+    );
+});
+
+describe('renameKey()', () => {
+    const testInputOutput: Array<[any, any]> = [
+        [
+            [
+                {
+                    a: 'first',
+                },
+            ],
+            [
+                {
+                    a: 'first',
+                },
+            ],
+        ],
+        [
+            [
+                {
+                    some_long_name_to_be_replaced: 'first',
+                },
+            ],
+            [
+                {
+                    slntbr: 'first',
+                },
+            ],
+        ],
+        [
+            [
+                {
+                    a: 'first',
+                },
+                {
+                    b: 'second',
+                    some_long_name_to_be_replaced: 'third',
+                },
+            ],
+            [
+                {
+                    a: 'first',
+                },
+                {
+                    b: 'second',
+                    slntbr: 'third',
+                },
+            ],
+        ],
+    ];
+
+    test.each(testInputOutput)(
+        'renames each property of input json %j named as \'some_long_name_to_be_replaced\' to \
+\'slntbr\' so the output is %j',
+        (input, expectedResult) => {
+            const res: any = renameKey(input, 'some_long_name_to_be_replaced', 'slntbr');
             expect(res).toEqual(expectedResult);
         },
     );

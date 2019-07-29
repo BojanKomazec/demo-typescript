@@ -5,6 +5,17 @@ It also demonstrates how to use some Node packages e.g. "pg" (used for connectin
 
 # Running the application
 
+## Building and running the app on the local host
+
+Building the app:
+```
+$ npm run build
+```
+Running unit tests:
+```
+$ npm test
+```
+
 ## Running demo-typescript in Docker container and making it connect to PostgreSQL DB running in another container
 
 

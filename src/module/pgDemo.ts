@@ -17,6 +17,8 @@ export async function testDb(config: IConfig): Promise<void> {
   console.log(res.rows[0].message); // Hello world!
   await demoTestingIfTableExists('contacts', client);
   await demoTestingIfTableExists('contacts_nonexisting', client);
+
+  // application hangs (never returns) if client.end() is not called
   await client.end();
 }
 
