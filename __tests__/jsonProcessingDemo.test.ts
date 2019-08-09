@@ -1,4 +1,5 @@
-import { renameKey, transformArrayToString } from '../src/module/jsonProcessingDemo';
+import { InvalidArgumentError } from '../src/module/error/invalidArgumentError';
+import { getKeys, renameKey, transformArrayToString } from '../src/module/jsonProcessingDemo';
 
 test('Dummy test', () => {
     expect(1).toBe(1);
@@ -241,4 +242,73 @@ describe('renameKey()', () => {
             expect(res).toEqual(expectedResult);
         },
     );
+});
+
+describe('getKeys()', () => {
+
+    describe('when input object is not array-like (does not have *length* property)', () => {
+        describe('throws InvalidArgumentError ', () => {
+            const testInput: any[] = [
+                {},
+                {n: 1},
+            ];
+            test.each(testInput)(
+                'input json = %j',
+                (input) => {
+                    expect(() => { getKeys(input); }).toThrowError(InvalidArgumentError);
+                },
+            );
+        });
+    });
+
+    describe('when input object is array-like (it has *length* property)', () => {
+        const testInputOutput: Array<[any, any]> = [
+            [
+                [],
+                [],
+            ],
+            [
+                [{}],
+                [],
+            ],
+            [
+                [
+                    {
+                        a: 1,
+                    },
+                ],
+                ['a'],
+            ],
+            [
+                [
+                    {
+                        a: 1,
+                    },
+                    {
+                        b: 2,
+                    },
+                ],
+                ['a', 'b'],
+            ],
+            [
+                [
+                    {
+                        a: 1,
+                    },
+                    {
+                        a: 1,
+                        b: 2,
+                    },
+                ],
+                ['a', 'b'],
+            ],
+        ];
+
+        test.each(testInputOutput)(
+            'reads input json %j and returns collection of unique keys: %j',
+            (input, expectedResult) => {
+                expect(getKeys(input)).toEqual(expectedResult);
+            },
+        );
+    });
 });

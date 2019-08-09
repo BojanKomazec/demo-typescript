@@ -10,8 +10,66 @@ export function typesDemo() {
     indexerDemo();
 }
 
+function testProperty(o: any, key: string) {
+    console.log(`o.key = ${o.key}`);
+    console.log(`o[key] = ${o[key]}`);
+}
+
+function objectDemo() {
+    const o = {
+        a: 1,
+        b: undefined,
+    };
+
+    const key: string = 'c';
+    // Property 'key' does not exist on type '{ a: number; b: undefined; }'.ts(2339)
+    // const val = o.key;
+    // console.log(`o.key = ${o.key}`);
+
+    // Element implicitly has an 'any' type because expression of type 'string' can't be used to index type
+    // '{ a: number; b: undefined; }'.
+    // No index signature with a parameter of type 'string' was found on type '{ a: number; b: undefined; }'.ts(7053)
+    // const val = o[key];
+    // console.log(`o[key] = ${o[key]}`);
+
+    // To avoid ts(2339):
+    testProperty(o, key);
+}
+
+/**
+ * Examples in this demo describe why
+ *    if (!obj.length) { ... }
+ * covers both
+ *    obj.length is undefined
+ * and
+ *    obj.length is 0.
+ */
+function arrayLikeObjectsDemo() {
+    console.log('arrayLikeObjectsDemo()');
+
+    // NOT array-like objects
+    console.log(`{}.length = ${({} as any).length}`); // undefined
+
+    // array-like objects
+    console.log(`[].length = ${([] as any).length}`); // 0
+    console.log(`[{}].length = ${([{}] as any).length}`); // 1
+}
+
+function arrayFromDemo() {
+    console.log('arrayFromDemo()');
+    const o1: any = {
+        n: 1,
+        s: 'test',
+    };
+
+    const a1 = Array.from(o1);
+    console.log(`a1 = ${a1}`);
+}
+
 function typesDemo1() {
     console.log('typesDemo1()');
+
+    objectDemo();
 
     //
     // boolean
@@ -57,6 +115,10 @@ function typesDemo1() {
     //
     let color: string = 'pink';
     color = 'blue';
+    const multilineString: string = `This
+is a
+    multiline string`;
+    console.log(multilineString);
 
     //
     // template string
@@ -73,6 +135,8 @@ function typesDemo1() {
     // tslint:disable-next-line
     const lottoCombination2: Array<number> = [3, 23, 14, 35, 30, 1, 7];
     // error@ [tslint] Array type using 'Array<T>' is forbidden for simple types. Use 'T[]' instead.
+    arrayFromDemo();
+    arrayLikeObjectsDemo();
 
     //
     // Tuple
