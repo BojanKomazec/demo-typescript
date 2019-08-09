@@ -3,8 +3,8 @@
 // import { functionsDemo } from './module/functionsDemo';
 // import { httpClientDemo } from './module/httpClientDemo';
 // import { interfaceDemo } from './module/interfaceDemo';
-// import { keyofDemo } from './module/keyofDemo';
 import { jsonProcessingDemo } from './module/jsonProcessingDemo';
+import { keyofDemo } from './module/keyofDemo';
 import { knexDemo } from './module/knexDemo';
 import { testDb } from './module/pgDemo';
 import { selfInvokingFuncModuleImporterDemo } from './module/selfInvokingFunctionModuleImporter';
@@ -32,13 +32,6 @@ function loadConfig(): IConfig {
     };
 }
 
-// keyofDemo();
-// typesDemo();
-// functionsDemo();
-// classDemo();
-// interfaceDemo();
-// httpClientDemo();
-
 // https://stackoverflow.com/questions/5006821/nodejs-how-to-read-keystrokes-from-stdin
 // Making Interactive Node.js Console Apps That Listen for Keypress Events • thisDaveJ
 // https://stackoverflow.com/questions/12742082/nodejs-require-inside-typescript-file
@@ -64,6 +57,12 @@ function runnableFromCommandLine(): void {
     typesDemo();
     // selfInvokingFuncModuleImporterDemo();
     jsonProcessingDemo();
+    keyofDemo();
+    typesDemo();
+    // functionsDemo();
+    // classDemo();
+    // interfaceDemo();
+    // httpClientDemo();
 }
 
 /**

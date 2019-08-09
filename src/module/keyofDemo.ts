@@ -4,8 +4,10 @@ function getProperty1(obj: {}, key: string): any {
 }
 
 // https://blog.mariusschulz.com/2017/01/06/typescript-2-1-keyof-and-lookup-types
+// tslint:disable-next-line: max-line-length
+// https://stackoverflow.com/questions/32968332/how-do-i-prevent-the-error-index-signature-of-object-type-implicitly-has-an-an
 export function keyofDemo() {
-    console.log('keyofDemo()');
+    console.log('\n\nkeyofDemo()\n');
     console.log(typeof(getProperty1)); // output: function
     console.log(getProperty1.toString()); // output: function getProperty1(obj, key) { return obj[key]; }
 
@@ -39,4 +41,13 @@ export function keyofDemo() {
         id: 1,
         task: 'Buy apples',
     };
+
+    const keyDue: string = 'due';
+    // Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'ITodoItem'.
+    // No index signature with a parameter of type 'string' was found on type 'ITodoItem'.ts(7053)
+    // const valueDue: Date = todo[keyDue];
+    const keyDue2: (keyof ITodoItem) = 'due';
+    const valueDue: Date = todo[keyDue2];
+    console.log(`valueDue = ${valueDue}`);
+    // Output: valueDue = Sun Dec 16 2018 00:00:00 GMT+0000 (Greenwich Mean Time)
 }

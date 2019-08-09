@@ -10,6 +10,11 @@ export function typesDemo() {
     indexerDemo();
 }
 
+/**
+ * Prints undefined if property 'key' does not exist in the object.
+ * @param o Object
+ * @param key Property name to be looked for.
+ */
 function testProperty(o: any, key: string) {
     console.log(`o.key = ${o.key}`);
     console.log(`o[key] = ${o[key]}`);
