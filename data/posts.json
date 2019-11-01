@@ -1,0 +1,40 @@
+[
+    {
+        "type": "news",
+        "date": "2019-03-06 23:20:35",
+        "categories": [],
+        "author__id": 1,
+        "tags1": [
+            "entertainment",
+            "celebrities"
+        ],
+        "tags2": [
+            ""
+        ]
+    },
+    {
+        "type": "guest_article",
+        "date": "2019-03-07 12:20:35",
+        "categories": [],
+        "author__id": 2,
+        "tags1": [
+            ""
+        ],
+        "tags2": [
+            ""
+        ]
+    },
+    {
+        "type": "news",
+        "date": "2019-03-06 23:20:35",
+        "categories": [],
+        "author__id": 1,
+        "tags1": [
+            "world_politics",
+            "trump"
+        ],
+        "tags2": [
+            ""
+        ]
+    }
+]

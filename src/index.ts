@@ -3,6 +3,9 @@
 // import { functionsDemo } from './module/functionsDemo';
 // import { httpClientDemo } from './module/httpClientDemo';
 // import { interfaceDemo } from './module/interfaceDemo';
+import { asyncDemo } from './module/asyncDemo';
+import { errorDemo } from './module/errorDemo';
+import { httpServerDemo } from './module/httpServerDemo/httpServerDemo';
 import { jsonProcessingDemo } from './module/jsonProcessingDemo';
 import { keyofDemo } from './module/keyofDemo';
 import { knexDemo } from './module/knexDemo';
@@ -54,15 +57,17 @@ function loadConfig(): IConfig {
  * To run these demos you can run the app from command line as "npm start"
  */
 function runnableFromCommandLine(): void {
-    typesDemo();
-    // selfInvokingFuncModuleImporterDemo();
-    jsonProcessingDemo();
-    keyofDemo();
-    typesDemo();
-    // functionsDemo();
+    // asyncDemo();
     // classDemo();
-    // interfaceDemo();
+    // errorDemo();
+    // functionsDemo();
     // httpClientDemo();
+    httpServerDemo();
+    // interfaceDemo();
+    // jsonProcessingDemo();
+    // keyofDemo();
+    // selfInvokingFuncModuleImporterDemo();
+    // typesDemo();
 }
 
 /**
