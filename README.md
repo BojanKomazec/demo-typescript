@@ -15,6 +15,10 @@ Running unit tests:
 ```
 $ npm test
 ```
+Running the app:
+```
+$ npm run start
+```
 
 ## Running demo-typescript in Docker container and making it connect to PostgreSQL DB running in another container
 

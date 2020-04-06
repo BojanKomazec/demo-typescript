@@ -16,6 +16,7 @@ import { IConfig } from './types';
 
 // require('dotenv').config()
 import * as dotenv from 'dotenv';
+import { httpClientDemo } from './module/httpClientDemo';
 
 function loadConfig(): IConfig {
     const defaultPgHost = 'localhost';
@@ -61,8 +62,8 @@ function runnableFromCommandLine(): void {
     // classDemo();
     // errorDemo();
     // functionsDemo();
-    // httpClientDemo();
-    httpServerDemo();
+    httpClientDemo();
+    // httpServerDemo();
     // interfaceDemo();
     // jsonProcessingDemo();
     // keyofDemo();
