@@ -180,3 +180,23 @@ db_1  | 2019-05-30 15:14:51.904 UTC [1] LOG:  database system is ready to accept
 ```
 
 Note the presence of `CREATE DATABASE` command which indicates that process did create database specified in yml file.
+
+# Adding a demo of a new production dependency
+
+To add a demo of a functionality of some new 3rd party package that this app depends on in producton, use [npm install](https://docs.npmjs.com/downloading-and-installing-packages-locally):
+```
+$ npm install packageXYZ
+```
+
+After this `dependencies` property in `package.json` will contain packageXYZ.
+
+In a new file `packageXYZDemo.ts` we can now use some of `import` forms to import required entities.
+We might need to inspect `packageXYZ.d.ts` file to check what's exported.
+
+https://www.typescriptlang.org/docs/handbook/modules.html
+https://stackoverflow.com/questions/21247278/about-d-ts-in-typescript
+https://dzone.com/articles/import-statements-in-typescript-which-syntax-to-us
+https://blog.jdriven.com/2017/06/typescript-and-es6-import-syntax/
+https://stackoverflow.com/questions/36795819/when-should-i-use-curly-braces-for-es6-import
+https://stackoverflow.com/questions/55260680/typescript-import-type-eslint-import-named
+https://stackoverflow.com/questions/39658232/import-vs-require-in-typescript

@@ -4,6 +4,8 @@
 // import { httpClientDemo } from './module/httpClientDemo';
 // import { interfaceDemo } from './module/interfaceDemo';
 import { asyncDemo } from './module/asyncDemo';
+import { axiosImportEntireModuleDemo } from './module/axiosHttpClientDemo/axiosImportEntireModuleDemo';
+import { axiosImportSomeExportsDemo } from './module/axiosHttpClientDemo/axiosImportSomeExportsDemo';
 import { errorDemo } from './module/errorDemo';
 import { httpServerDemo } from './module/httpServerDemo/httpServerDemo';
 import { jsonProcessingDemo } from './module/jsonProcessingDemo';
@@ -59,10 +61,12 @@ function loadConfig(): IConfig {
  */
 function runnableFromCommandLine(): void {
     // asyncDemo();
+    // axiosImportEntireModuleDemo();
+    axiosImportSomeExportsDemo();
     // classDemo();
     // errorDemo();
     // functionsDemo();
-    httpClientDemo();
+    // httpClientDemo();
     // httpServerDemo();
     // interfaceDemo();
     // jsonProcessingDemo();

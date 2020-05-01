@@ -1,5 +1,5 @@
-import request = require('request');
 // const request = require('request');
+import request = require('request');
 
 export function httpClientDemo() {
     // requestDemo();
