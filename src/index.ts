@@ -3,6 +3,7 @@
 // import { functionsDemo } from './module/functionsDemo';
 // import { httpClientDemo } from './module/httpClientDemo';
 // import { interfaceDemo } from './module/interfaceDemo';
+import { loadConfig } from './config';
 import { asyncDemo } from './module/asyncDemo';
 import { axiosImportEntireModuleDemo } from './module/axiosHttpClientDemo/axiosImportEntireModuleDemo';
 import { axiosImportSomeExportsDemo } from './module/axiosHttpClientDemo/axiosImportSomeExportsDemo';
@@ -19,24 +20,6 @@ import { IConfig } from './types';
 // require('dotenv').config()
 import * as dotenv from 'dotenv';
 import { httpClientDemo } from './module/httpClientDemo';
-
-function loadConfig(): IConfig {
-    const defaultPgHost = 'localhost';
-    const defaultPgDatabase = 'demo_ts';
-    const defaultPgUser = 'postgres';
-    const defaultPgPassword = 'postgres';
-    const defaultPgPort = '5432';
-
-    return {
-        db: {
-            database: process.env.DB_NAME || defaultPgDatabase,
-            host: process.env.DB_HOST || defaultPgHost,
-            password: process.env.DB_PASSWORD || defaultPgPassword,
-            port: parseInt(process.env.DB_PORT || defaultPgPort, 10),
-            user: process.env.DB_USER || defaultPgUser,
-        },
-    };
-}
 
 // https://stackoverflow.com/questions/5006821/nodejs-how-to-read-keystrokes-from-stdin
 // Making Interactive Node.js Console Apps That Listen for Keypress Events • thisDaveJ
@@ -59,10 +42,10 @@ function loadConfig(): IConfig {
 /**
  * To run these demos you can run the app from command line as "npm start"
  */
-function runnableFromCommandLine(): void {
+function runnableFromCommandLine(config: IConfig): void {
     // asyncDemo();
     // axiosImportEntireModuleDemo();
-    axiosImportSomeExportsDemo();
+    axiosImportSomeExportsDemo(config);
     // classDemo();
     // errorDemo();
     // functionsDemo();
@@ -78,9 +61,8 @@ function runnableFromCommandLine(): void {
 /**
  * To run these demos you have to run the app in a container, with "docker-compose up"
  */
-async function runnableFromDocker(): Promise<void> {
-    runnableFromCommandLine();
-    const config: IConfig = loadConfig();
+async function runnableFromDocker(config: IConfig): Promise<void> {
+    runnableFromCommandLine(config);
     await testDb(config);
     knexDemo(config);
 }
@@ -100,8 +82,9 @@ async function dummyAsyncFunction(): Promise<void> {
  */
 (async () => {
     try {
-        runnableFromCommandLine();
-        // await runnableFromDocker();
+        const config: IConfig = loadConfig();
+        runnableFromCommandLine(config);
+        // await runnableFromDocker(config);
 
         // test async entry point
         // console.log('before calling dummyAsyncFunction()');

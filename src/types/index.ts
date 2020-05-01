@@ -6,8 +6,14 @@ interface IDbConfig {
     user: string;
 }
 
+interface IHttpConfig {
+    httpRequestTimeout: number;
+    httpResponseTimeout: number;
+}
+
 interface IConfig {
     db: IDbConfig;
+    http: IHttpConfig;
 }
 
 export {

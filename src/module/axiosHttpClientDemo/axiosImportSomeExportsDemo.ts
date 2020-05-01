@@ -36,13 +36,14 @@
 // within the curly braced list of named exports:
 
 import axiosDefaultExportedInstance, { AxiosResponse } from 'axios';
+import { IConfig } from '../../types';
 
-export function axiosImportSomeExportsDemo() {
+export function axiosImportSomeExportsDemo(config: IConfig) {
     // requestSentByDefaultImportedAxiosObject();
     // requestWithTimeoutSentByDefaultImportedAxiosObject();
     // requestWithTimeoutFixSentByDefaultImportedAxiosObject();
     // requestWithTimeoutFix2SentByDefaultImportedAxiosObject();
-    testTimeoutFix();
+    testTimeoutFix(config);
     // axiosDemoTimeoutSetDurinCreation();
 }
 
@@ -144,13 +145,12 @@ async function requestWithTimeoutFix2SentByDefaultImportedAxiosObject() {
 //
 // Using cancel mechanism is the only way to achieve request timeout. Setting timeout does not have effect if
 // url is unreachable.
-async function requestWithTimeoutFix3SentByDefaultImportedAxiosObject(url: string) {
+async function requestWithTimeoutFix3SentByDefaultImportedAxiosObject(config: IConfig, url: string) {
     let response: AxiosResponse;
-    const timeoutValue = 10000; // ms
     // timeout fix (which works as it applies timeout on sending request; not on receiving response as previous fixes):
     const CancelToken = axiosDefaultExportedInstance.CancelToken;
     const source = CancelToken.source();
-    const id = setTimeout(() => source.cancel('timeout'), timeoutValue);
+    const id = setTimeout(() => source.cancel('timeout'), config.http.httpRequestTimeout);
 
     try {
         console.log('Sending request at: ' + new Date());
@@ -171,12 +171,12 @@ async function requestWithTimeoutFix3SentByDefaultImportedAxiosObject(url: strin
     console.log(`response.status: ${JSON.stringify(response.status, null, 2)}\n`);
 }
 
-async function testTimeoutFix() {
+async function testTimeoutFix(config: IConfig) {
     const urlUnreachable = 'https://www.example.com:81';
-    await requestWithTimeoutFix3SentByDefaultImportedAxiosObject(urlUnreachable);
+    await requestWithTimeoutFix3SentByDefaultImportedAxiosObject(config, urlUnreachable);
 
     const urlReachable = 'https://www.google.com/';
-    await requestWithTimeoutFix3SentByDefaultImportedAxiosObject(urlReachable);
+    await requestWithTimeoutFix3SentByDefaultImportedAxiosObject(config, urlReachable);
 }
 
 async function simpleRequestDemo() {
