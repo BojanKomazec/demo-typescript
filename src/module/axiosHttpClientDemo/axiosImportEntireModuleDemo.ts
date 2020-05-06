@@ -11,6 +11,20 @@ import * as axios from 'axios';
 //
 // import * as xyz from ... seems not to be good choice of import format when package has default exports.
 
+// If we write:
+//      const axios = require('axios');
+// we'll get error:
+//      require statement not part of an import statement (no-var-requires)tslint(1)
+//
+// We can suppress it with:
+//      /* tslint:disable: no-var-requires */
+//      const axios = require('axios');
+// ...but in this case we'd loose type info: axios would be of type 'any'.
+//
+// We could convert it to:
+//      import axios from 'axios';
+// ...and this is what we used in axiosImportSomeExportsDemo.ts.
+
 export function axiosImportEntireModuleDemo() {
     simpleRequestDemo();
 }

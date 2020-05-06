@@ -45,9 +45,9 @@ import { httpClientDemo } from './module/httpClientDemo';
 function runnableFromCommandLine(config: IConfig): void {
     // asyncDemo();
     // axiosImportEntireModuleDemo();
-    axiosImportSomeExportsDemo(config);
+    // axiosImportSomeExportsDemo(config);
     // classDemo();
-    // errorDemo();
+    errorDemo();
     // functionsDemo();
     // httpClientDemo();
     // httpServerDemo();

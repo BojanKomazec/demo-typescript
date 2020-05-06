@@ -150,22 +150,27 @@ async function requestWithTimeoutFix3SentByDefaultImportedAxiosObject(config: IC
     // timeout fix (which works as it applies timeout on sending request; not on receiving response as previous fixes):
     const CancelToken = axiosDefaultExportedInstance.CancelToken;
     const source = CancelToken.source();
-    const id = setTimeout(() => source.cancel('timeout'), config.http.httpRequestTimeout);
+    const timeoutId = setTimeout(
+        () => source.cancel('timeout'),
+        config.http.httpRequestTimeout,
+    );
 
     try {
         console.log('Sending request at: ' + new Date());
         response = await axiosDefaultExportedInstance.get(url, {
             cancelToken: source.token,
+            timeout: config.http.httpResponseTimeout,
         });
     } catch (err) {
         console.log('AxiosInstance.get() failed at: ' + new Date());
         if (axiosDefaultExportedInstance.isCancel(err)) {
             console.log(`AxiosInstance.get() canceled. Error: ${err}`);
-            clearTimeout(id);
         } else {
             console.log(`AxiosInstance.get() failed. Error: ${err}`);
         }
         return;
+    } finally {
+        clearTimeout(timeoutId);
     }
 
     console.log(`response.status: ${JSON.stringify(response.status, null, 2)}\n`);
